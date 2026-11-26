@@ -1,10 +1,6 @@
 import Row from './Row';
 import { MAX_GUESSES, evaluateGuess } from '../utils/wordle';
 
-/**
- * Renders the 6x5 Wordle game board matrix.
- * Displays past evaluated guesses, the active currentGuess row, and remaining empty rows.
- */
 export default function GameBoard({
   pastGuesses,
   currentGuess,

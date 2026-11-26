@@ -4,9 +4,6 @@ const KEYBOARD_ROWS = [
   ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BACKSPACE'],
 ];
 
-/**
- * Renders the interactive on-screen QWERTY keyboard synced with tile evaluation states.
- */
 export default function Keyboard({ keyStatuses, onKeyPress, disabled }) {
   return (
     <div className="keyboard" role="group" aria-label="On-screen Keyboard">

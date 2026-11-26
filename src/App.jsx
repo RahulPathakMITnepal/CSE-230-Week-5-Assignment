@@ -3,15 +3,15 @@ import GameBoard from './components/GameBoard';
 import GameOverModal from './components/GameOverModal';
 import Keyboard from './components/Keyboard';
 import {
+  FIXED_WORD,
   MAX_GUESSES,
   WORD_LENGTH,
   getKeyboardStatuses,
-  getRandomWord,
 } from './utils/wordle';
 import './App.css';
 
 export default function App() {
-  const [solutionWord, setSolutionWord] = useState(() => getRandomWord());
+  const [solutionWord] = useState(FIXED_WORD);
   const [currentGuess, setCurrentGuess] = useState('');
   const [pastGuesses, setPastGuesses] = useState([]);
   const [gameStatus, setGameStatus] = useState('IN_PROGRESS');
@@ -82,7 +82,6 @@ export default function App() {
       if (event.ctrlKey || event.metaKey || event.altKey) return;
 
       if (event.key === 'Enter') {
-        // Prevent focused virtual keyboard buttons from firing a duplicate click
         event.preventDefault();
         handleKeyInput('ENTER');
         return;
@@ -103,7 +102,6 @@ export default function App() {
   }, [handleKeyInput]);
 
   const handleReset = useCallback(() => {
-    setSolutionWord(getRandomWord());
     setCurrentGuess('');
     setPastGuesses([]);
     setGameStatus('IN_PROGRESS');

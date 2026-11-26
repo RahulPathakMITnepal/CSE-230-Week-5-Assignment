@@ -1,6 +1,3 @@
-/**
- * Modal displayed when the game reaches 'WON' or 'LOST' state.
- */
 export default function GameOverModal({
   gameStatus,
   solutionWord,
@@ -15,7 +12,7 @@ export default function GameOverModal({
     <div className="modal-backdrop" role="dialog" aria-modal="true">
       <div className="modal">
         <h2 className={`modal__title ${isWin ? 'modal__title--win' : 'modal__title--loss'}`}>
-          {isWin ? 'Splendid!' : 'Game Over'}
+          {isWin ? 'You Win!' : 'Game Over'}
         </h2>
 
         {isWin ? (

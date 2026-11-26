@@ -1,0 +1,348 @@
+:root {
+  --color-correct: #6aaa64;
+  --color-present: #c9b458;
+  --color-absent: #787c7e;
+  --color-border-empty: #d3d6da;
+  --color-border-filled: #878a8c;
+  --color-key-bg: #d3d6da;
+  --color-key-text: #1a1a1b;
+  --color-text-light: #ffffff;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 12px 20px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--color-border-empty);
+}
+
+.header__title {
+  margin: 0;
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: 0.14rem;
+  color: #1a1a1b;
+}
+
+.header__reset {
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a1a1b;
+  background-color: #f3f4f6;
+  border: 1px solid var(--color-border-empty);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.header__reset:hover {
+  background-color: #e5e7eb;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.toast-slot {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast {
+  background-color: #1a1a1b;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 6x5 Game Board */
+.game-board {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.row--shake {
+  animation: row-shake 0.4s ease-in-out;
+}
+
+.tile {
+  width: 58px;
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  user-select: none;
+  border: 2px solid var(--color-border-empty);
+  border-radius: 4px;
+  color: #1a1a1b;
+  background-color: #ffffff;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.tile--filled {
+  border-color: var(--color-border-filled);
+  animation: tile-pop 0.1s ease-in-out;
+}
+
+.tile--correct {
+  background-color: var(--color-correct);
+  border-color: var(--color-correct);
+  color: var(--color-text-light);
+  animation: tile-reveal 0.35s ease forwards;
+}
+
+.tile--present {
+  background-color: var(--color-present);
+  border-color: var(--color-present);
+  color: var(--color-text-light);
+  animation: tile-reveal 0.35s ease forwards;
+}
+
+.tile--absent {
+  background-color: var(--color-absent);
+  border-color: var(--color-absent);
+  color: var(--color-text-light);
+  animation: tile-reveal 0.35s ease forwards;
+}
+
+/* Virtual On-Screen Keyboard */
+.keyboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  user-select: none;
+}
+
+.keyboard__row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.key {
+  flex: 1;
+  max-width: 44px;
+  height: 54px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color-key-bg);
+  color: var(--color-key-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.08s ease;
+}
+
+.key:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+.key:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.key:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.key--wide {
+  flex: 1.5;
+  max-width: 68px;
+  font-size: 0.78rem;
+}
+
+.key--correct {
+  background-color: var(--color-correct);
+  color: var(--color-text-light);
+}
+
+.key--present {
+  background-color: var(--color-present);
+  color: var(--color-text-light);
+}
+
+.key--absent {
+  background-color: var(--color-absent);
+  color: var(--color-text-light);
+}
+
+/* Game Over Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 50;
+}
+
+.modal {
+  width: 100%;
+  max-width: 340px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+}
+
+.modal__title {
+  margin: 0 0 10px;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.modal__title--win {
+  color: var(--color-correct);
+}
+
+.modal__title--loss {
+  color: #dc2626;
+}
+
+.modal__message {
+  margin: 0 0 18px;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.modal__solution {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px;
+  margin-bottom: 20px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+}
+
+.modal__solution-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08rem;
+  color: #6b7280;
+}
+
+.modal__solution-word {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.25rem;
+  color: #1a1a1b;
+}
+
+.modal__button {
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--color-correct);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.modal__button:hover {
+  filter: brightness(0.92);
+}
+
+/* Animations */
+@keyframes tile-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes tile-reveal {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes row-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+@media (max-width: 440px) {
+  .tile {
+    width: 50px;
+    height: 50px;
+    font-size: 1.6rem;
+  }
+
+  .key {
+    height: 48px;
+    font-size: 0.85rem;
+  }
+}
